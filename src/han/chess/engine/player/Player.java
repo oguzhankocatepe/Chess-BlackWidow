@@ -31,7 +31,7 @@ public abstract class Player {
         this.isInCheck = !Player.calculateAttacksOnTile(playerKing.getPiecePosition(),opponentMoves).isEmpty();
     }
 
-    private static Collection<Move> calculateAttacksOnTile(Point p, Collection<Move> moves) {
+    private static Collection<Move> calculateAttacksOnTile(final Point p,final Collection<Move> moves) {
         final List<Move> attacks = new ArrayList<Move>();
         for (final Move move:moves)
             if(p == move.getDestination())
