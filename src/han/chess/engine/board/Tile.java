@@ -1,25 +1,25 @@
 package han.chess.engine.board;
 
+import han.chess.engine.Alliance;
 import han.chess.engine.pieces.Piece;
 import org.carrot2.shaded.guava.common.collect.ImmutableMap;
 
-import java.awt.*;
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Tile {
 
-    static final int TILESIZE = 8;
     protected static Point tileCoordinate;
 
-    private static Map<Point,EmptyTile> EMPTY_TILES = createAllPossibleEmptyTiles();
+    private static Map<Point,EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
 
     private static Map<Point, EmptyTile> createAllPossibleEmptyTiles() {
 
         final Map<Point,EmptyTile> emptyTileMap = new HashMap<>();
 
-        for (int i=0 ;i < TILESIZE ; i++)
-            for (int j=0 ;i < TILESIZE ; j++) {
+        for (int i = 0; i < BoardUtils.TILESIZE ; i++)
+            for (int j = 0; i < BoardUtils.TILESIZE ; j++) {
                 Point point = new Point(i, j);
                 emptyTileMap.put(point, new EmptyTile(point));
             }
@@ -28,11 +28,11 @@ public abstract class Tile {
     }
 
     public static Tile createTile(final Point point, final Piece piece){
-        return piece != null ? new OccupiedTile(point,piece) : EMPTY_TILES.get(tileCoordinate);
+        return piece != null ? new OccupiedTile(point,piece) : EMPTY_TILES_CACHE.get(point);
     }
 
     Tile(Point point){
-        tileCoordinate = point;
+        this.tileCoordinate = point;
     }
 
     public abstract boolean isTileOccupied();
@@ -41,8 +41,13 @@ public abstract class Tile {
 
     public static final class EmptyTile extends Tile{
 
-        EmptyTile(final Point point ){
+        private EmptyTile(final Point point ){
             super(point);
+        }
+
+        @Override
+        public String toString(){
+            return "-";
         }
 
         @Override
@@ -60,9 +65,17 @@ public abstract class Tile {
 
         private final Piece pieceOnTile;
 
-        OccupiedTile(final Point point,final Piece piece){
+        private OccupiedTile(final Point point,final Piece piece){
             super(point);
             pieceOnTile = piece;
+        }
+        @Override
+        public String toString(){
+            String backWhite = "\u001B[47m";
+            String colorBlack = "\u001B[30m";
+            String reset = "\u001B[0m";
+            return this.getPiece().getPieceAlliance()== Alliance.WHITE ? this.getPiece().toString():
+                    backWhite+colorBlack+this.getPiece().toString()+reset;
         }
 
         @Override
