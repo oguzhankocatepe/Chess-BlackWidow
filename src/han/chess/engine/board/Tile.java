@@ -12,7 +12,7 @@ public abstract class Tile {
 
     protected static Point tileCoordinate;
 
-    private static Map<Point,EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
+    private static final Map<Point,EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
 
     private static Map<Point, EmptyTile> createAllPossibleEmptyTiles() {
 
@@ -32,7 +32,7 @@ public abstract class Tile {
     }
 
     Tile(Point point){
-        this.tileCoordinate = point;
+        tileCoordinate = point;
     }
 
     public abstract boolean isTileOccupied();
