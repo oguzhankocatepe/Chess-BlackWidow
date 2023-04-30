@@ -25,10 +25,10 @@ public class Board {
     @Override
     public String toString(){
         final StringBuilder sbuilder = new StringBuilder();
-        for (int i=0; i < BoardUtils.TILESIZE * BoardUtils.TILESIZE ; i++){
+        for (int i=BoardUtils.TILESIZE * BoardUtils.TILESIZE-1; i >=0  ; i--){
             final String tileText =this.gameBoard.get(i).toString();
             sbuilder.append(String.format("%3s",tileText));
-            if ((i+1) % BoardUtils.TILESIZE == 0)
+            if ((i) % BoardUtils.TILESIZE == 0)
                 sbuilder.append("\n");
         }
         return sbuilder.toString();

@@ -19,7 +19,7 @@ public abstract class Tile {
         final Map<Point,EmptyTile> emptyTileMap = new HashMap<>();
 
         for (int i = 0; i < BoardUtils.TILESIZE ; i++)
-            for (int j = 0; i < BoardUtils.TILESIZE ; j++) {
+            for (int j = 0; j < BoardUtils.TILESIZE ; j++) {
                 Point point = new Point(i, j);
                 emptyTileMap.put(point, new EmptyTile(point));
             }
@@ -72,10 +72,13 @@ public abstract class Tile {
         @Override
         public String toString(){
             String backWhite = "\u001B[47m";
+            String backBlack = "\u001B[40m";
             String colorBlack = "\u001B[30m";
+            String colorWhite = "\u001B[37m";
             String reset = "\u001B[0m";
-            return this.getPiece().getPieceAlliance()== Alliance.WHITE ? this.getPiece().toString():
-                    backWhite+colorBlack+this.getPiece().toString()+reset;
+            return this.getPiece().getPieceAlliance()== Alliance.WHITE ?
+                    backBlack+colorWhite+" "+this.getPiece()+" "+reset:
+                    backWhite+colorBlack+" "+this.getPiece()+" "+reset;
         }
 
         @Override
