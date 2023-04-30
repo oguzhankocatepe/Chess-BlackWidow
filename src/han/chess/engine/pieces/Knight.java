@@ -17,7 +17,7 @@ public class Knight extends Piece {
                                                 new Point (-2,-1), new Point(-1,-2), new Point(1,-2) , new Point(2,-1)};
 
     public Knight(Point position, Alliance alliance) {
-        super(position, alliance);
+        super(PieceType.KNIGHT,position, alliance);
     }
 
     @Override

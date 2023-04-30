@@ -19,7 +19,7 @@ public class Queen extends Piece {
                                             new Point (1,1), new Point(-1,1), new Point(-1,-1) , new Point(1,-1)};
 
     public Queen(Point position, Alliance alliance) {
-        super(position, alliance);
+        super(PieceType.QUEEN,position, alliance);
     }
 
     @Override

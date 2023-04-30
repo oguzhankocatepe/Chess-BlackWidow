@@ -18,7 +18,7 @@ public class King extends Piece{
             new Point (1,1), new Point(-1,1), new Point(-1,-1) , new Point(1,-1)};
 
     public King(Point position, Alliance alliance) {
-        super(position, alliance);
+        super(PieceType.KING, position, alliance);
     }
 
     @Override

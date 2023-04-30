@@ -15,7 +15,7 @@ public class Rook extends Piece {
     private final static Point[] candidates = { new Point (0,1), new Point(-1,0), new Point(1,0) , new Point(0,-1)};
 
     public Rook(Point position, Alliance alliance) {
-        super(position, alliance);
+        super(PieceType.ROOK,position, alliance);
     }
 
     @Override

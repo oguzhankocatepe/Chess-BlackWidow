@@ -8,11 +8,13 @@ import java.awt.Point;
 import java.util.Collection;
 
 public abstract class Piece {
+    protected final PieceType pieceType;
     protected final Point piecePosition;
     protected final Alliance pieceAlliance;
     //protected boolean isFirstMove;
 
-    Piece(final Point position, final Alliance alliance){
+    Piece(final PieceType pieceType,final Point position, final Alliance alliance){
+        this.pieceType = pieceType;
         this.piecePosition = position;
         this.pieceAlliance = alliance;
         //this.isFirstMove = true;
@@ -33,11 +35,15 @@ public abstract class Piece {
     */
     public abstract Collection<Move> calculateLegalMoves(final Board board);
 
+    public PieceType getPieceType() {
+        return this.pieceType;
+    }
+
     public enum PieceType{
 
         PAWN("P"),KNIGHT("N"),BISHOP("B"),ROOK("R"),QUEEN("Q"),KING("K");
 
-        private String pieceName;
+        private final String pieceName;
 
         PieceType(final String s){
             pieceName = s;

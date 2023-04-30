@@ -14,7 +14,7 @@ public class Pawn extends Piece{
     private final static Point[] candidates = { new Point(0,1), new Point(0,2), new Point(-1,1), new Point(1,1)};
 
     public Pawn(Point position, Alliance alliance) {
-        super(position, alliance);
+        super(PieceType.PAWN,position, alliance);
     }
 
     @Override

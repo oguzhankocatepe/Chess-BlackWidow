@@ -16,10 +16,21 @@ public abstract class Move {
         this.destination = point;
     }
 
+    public Point getDestination() {
+        return destination;
+    }
+
+    public abstract Board execute();
+
     public static final class MajorMove extends Move{
 
         public MajorMove(final Board board,final Piece piece,final Point point) {
             super(board, piece, point);
+        }
+
+        @Override
+        public Board execute() {
+            return null;
         }
     }
 
@@ -31,11 +42,19 @@ public abstract class Move {
             super(board, piece, point);
             this.attackedPiece = apiece;
         }
+        @Override
+        public Board execute() {
+            return null;
+        }
     }
 
     public static final class PawnMove extends Move {
         public PawnMove(Board board, Piece piece, Point point) {
             super(board, piece, point);
+        }
+        @Override
+        public Board execute() {
+            return null;
         }
     }
 }
