@@ -17,7 +17,7 @@ public class King extends Piece{
     private final static Point[] candidates = { new Point (0,1), new Point(-1,0), new Point(1,0) , new Point(0,-1),
             new Point (1,1), new Point(-1,1), new Point(-1,-1) , new Point(1,-1)};
 
-    public King(Point position, Alliance alliance) {
+    public King(final Point position,final  Alliance alliance) {
         super(PieceType.KING, position, alliance);
     }
 

@@ -16,7 +16,7 @@ public class Knight extends Piece {
     private final static Point[] candidates = { new Point (2,1), new Point(1,2), new Point(-1,2) , new Point(-2,1) ,
                                                 new Point (-2,-1), new Point(-1,-2), new Point(1,-2) , new Point(2,-1)};
 
-    public Knight(Point position, Alliance alliance) {
+    public Knight(final Point position, final Alliance alliance) {
         super(PieceType.KNIGHT,position, alliance);
     }
 

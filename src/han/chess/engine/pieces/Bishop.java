@@ -16,7 +16,7 @@ public class Bishop extends Piece {
 
     private final static Point[] candidates = { new Point (1,1), new Point(-1,1), new Point(-1,-1) , new Point(1,-1)};
 
-    public Bishop(Point position, Alliance alliance) {
+    public Bishop(final Point position, final Alliance alliance) {
         super(PieceType.BISHOP,position, alliance);
     }
 

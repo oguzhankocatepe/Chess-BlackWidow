@@ -18,7 +18,7 @@ public class Queen extends Piece {
     private final static Point[] candidates = { new Point (0,1), new Point(-1,0), new Point(1,0) , new Point(0,-1),
                                             new Point (1,1), new Point(-1,1), new Point(-1,-1) , new Point(1,-1)};
 
-    public Queen(Point position, Alliance alliance) {
+    public Queen(final Point position, final Alliance alliance) {
         super(PieceType.QUEEN,position, alliance);
     }
 
