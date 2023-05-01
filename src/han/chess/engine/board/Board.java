@@ -6,6 +6,7 @@ import han.chess.engine.player.BlackPlayer;
 import han.chess.engine.player.Player;
 import han.chess.engine.player.WhitePlayer;
 import org.carrot2.shaded.guava.common.collect.ImmutableList;
+import org.carrot2.shaded.guava.common.collect.Iterables;
 
 import java.awt.Point;
 import java.util.*;
@@ -82,6 +83,10 @@ public class Board {
         return gameBoard.get(destination.y * BoardUtils.TILESIZE + destination.x);
     }
 
+    public Iterable<Move> getAllLegalMoves() {
+        return Iterables.unmodifiableIterable(Iterables.concat(whitePlayer.getLegalMoves(),blackPlayer.getLegalMoves()));
+    }
+
     private List<Tile> createGameBoard(final Builder builder) {
         final Tile[] tiles = new Tile[BoardUtils.TILESIZE * BoardUtils.TILESIZE];
         for (int i = 0 ;i < BoardUtils.TILESIZE; i++)
@@ -133,10 +138,12 @@ public class Board {
         return builder.build();
     }
 
+
     public static class Builder{
 
         Map<Point,Piece> boardConfig;
         Alliance nextMoveMaker;
+        Pawn enPassantPawn;
 
         public Builder(){
             boardConfig = new HashMap<Point,Piece>();
@@ -154,6 +161,10 @@ public class Board {
 
         public Board build(){
             return new Board(this);
+        }
+
+        public void setEnPassantPawn(Pawn movedPawn) {
+            this.enPassantPawn = movedPawn;
         }
     }
 }

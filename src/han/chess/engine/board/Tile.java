@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Tile {
-
     protected static Point tileCoordinate;
 
     private static final Map<Point,EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
@@ -38,7 +37,9 @@ public abstract class Tile {
     public abstract boolean isTileOccupied();
 
     public abstract Piece getPiece();
-
+    public Point getTileCoordinate() {
+        return tileCoordinate;
+    }
     public static final class EmptyTile extends Tile{
 
         private EmptyTile(final Point point ){

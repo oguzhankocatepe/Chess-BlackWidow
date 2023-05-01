@@ -6,6 +6,7 @@ import han.chess.engine.board.Move;
 import han.chess.engine.pieces.King;
 import han.chess.engine.pieces.Piece;
 import org.carrot2.shaded.guava.common.collect.ImmutableList;
+import org.carrot2.shaded.guava.common.collect.Iterables;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,15 +24,16 @@ public abstract class Player {
     public abstract Collection<Piece> getActivePieces();
     public abstract Alliance getAlliance();
     public abstract Player getOpponent();
+    protected abstract Collection<Move> calculateKingCastles(Collection<Move> playerLegals,Collection<Move> opponentLegals);
 
     Player(final Board board, final Collection<Move> legalMoves,final Collection<Move> opponentMoves){
         this.board = board;
-        this.legalMoves = legalMoves;
+        this.legalMoves = ImmutableList.copyOf(Iterables.concat(legalMoves,calculateKingCastles(legalMoves,opponentMoves)));
         this.playerKing = establishKing();
         this.isInCheck = !Player.calculateAttacksOnTile(playerKing.getPiecePosition(),opponentMoves).isEmpty();
     }
 
-    private static Collection<Move> calculateAttacksOnTile(final Point p,final Collection<Move> moves) {
+    protected static Collection<Move> calculateAttacksOnTile(final Point p,final Collection<Move> moves) {
         final List<Move> attacks = new ArrayList<Move>();
         for (final Move move:moves)
             if(p == move.getDestination())
