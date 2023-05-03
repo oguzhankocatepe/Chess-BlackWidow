@@ -19,4 +19,7 @@ public class MoveTransition {
         return moveStatus;
     }
 
+    public Board getBoard() {
+        return transitionBoard;
+    }
 }
