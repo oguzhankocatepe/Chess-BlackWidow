@@ -4,7 +4,7 @@ import han.chess.engine.pieces.Pawn;
 import han.chess.engine.pieces.Rook;
 import han.chess.engine.pieces.Piece;
 
-import java.awt.*;
+import java.awt.Point;
 
 import static han.chess.engine.board.Board.*;
 
@@ -97,13 +97,13 @@ public abstract class Move {
         public Piece getAttackedPiece(){ return this.attackedPiece;}
     }
 
-    public static final class PawnMove extends Move {
+    public final static class PawnMove extends Move {
         public PawnMove(final Board board,final Piece piece,final Point point) {
             super(board, piece, point);
         }
     }
 
-    public static final class PawnJump extends Move {
+    public final static class PawnJump extends Move {
         public PawnJump(final Board board,final Piece piece,final Point point) {
             super(board, piece, point);
         }

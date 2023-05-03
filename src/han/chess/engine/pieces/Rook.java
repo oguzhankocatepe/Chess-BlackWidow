@@ -7,33 +7,33 @@ import han.chess.engine.board.Move;
 import han.chess.engine.board.Tile;
 import org.carrot2.shaded.guava.common.collect.ImmutableList;
 
-import java.awt.*;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
+import static han.chess.engine.board.Move.*;
 
 public class Rook extends Piece {
     private final static Point[] candidates = { new Point (0,1), new Point(-1,0), new Point(1,0) , new Point(0,-1)};
 
-    public Rook(final Point position, final Alliance alliance) {
-        super(PieceType.ROOK,position, alliance);
-    }
+    public Rook(final Point position, final Alliance alliance) {    super(PieceType.ROOK,position, alliance);    }
 
     @Override
     public Collection<Move> calculateLegalMoves(Board board) {
-        java.util.List<Move> legalMoves = new ArrayList<Move>();
+        List<Move> legalMoves = new ArrayList<Move>();
         for (final Point p: candidates) {
-            final Point destination = piecePosition;
+            Point destination = new Point(piecePosition);
             while (BoardUtils.checkValid(destination)){
-                destination.x += p.x;
-                destination.y += p.y;
+                destination = new Point(destination.x + p.x,destination.y + p.y);
                 if (BoardUtils.checkValid(destination)){
                     final Tile candidateTile = board.getTile(destination);
                     if (!candidateTile.isTileOccupied())
-                        legalMoves.add(new Move.MajorMove(board,this,destination));
+                        legalMoves.add(new MajorMove(board,this,destination));
                     else {
                         final Piece piece = candidateTile.getPiece();
                         if (this.getPieceAlliance() != piece.getPieceAlliance())
-                            legalMoves.add(new Move.AttackMove(board,this,destination,piece));
+                            legalMoves.add(new AttackMove(board,this,destination,piece));
                         break;
                     }
                 }

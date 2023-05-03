@@ -4,13 +4,15 @@ import han.chess.engine.Alliance;
 import han.chess.engine.board.Board;
 import han.chess.engine.board.BoardUtils;
 import han.chess.engine.board.Move;
-import han.chess.engine.board.Move.AttackMove;
-import han.chess.engine.board.Move.MajorMove;
 import han.chess.engine.board.Tile;
 import org.carrot2.shaded.guava.common.collect.ImmutableList;
 
-import java.awt.*;
-import java.util.*;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import static han.chess.engine.board.Move.*;
 
 public class King extends Piece{
 
@@ -23,12 +25,9 @@ public class King extends Piece{
 
     @Override
     public Collection<Move> calculateLegalMoves(Board board) {
-        java.util.List<Move> legalMoves = new ArrayList<Move>();
+        List<Move> legalMoves = new ArrayList<Move>();
         for (final Point p:candidates) {
-            final Point destination = new Point();
-            destination.x = piecePosition.x + p.x;
-            destination.y = piecePosition.y + p.y;
-
+            final Point destination = new Point(piecePosition.x + p.x,piecePosition.y + p.y);
             if (BoardUtils.checkValid(destination)) { // valid Coordinate
                 final Tile candidateTile = board.getTile(destination);
                 if (!candidateTile.isTileOccupied())

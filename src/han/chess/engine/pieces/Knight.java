@@ -1,7 +1,10 @@
 package han.chess.engine.pieces;
 
 import han.chess.engine.Alliance;
-import han.chess.engine.board.*;
+import han.chess.engine.board.Board;
+import han.chess.engine.board.BoardUtils;
+import han.chess.engine.board.Move;
+import han.chess.engine.board.Tile;
 import org.carrot2.shaded.guava.common.collect.ImmutableList;
 
 import java.awt.Point;
@@ -24,10 +27,7 @@ public class Knight extends Piece {
     public Collection<Move> calculateLegalMoves(final Board board) {
         List<Move> legalMoves = new ArrayList<Move>();
         for (final Point p:candidates) {
-            final Point destination = new Point();
-            destination.x = piecePosition.x + p.x;
-            destination.y = piecePosition.y + p.y;
-
+            final Point destination = new Point(piecePosition.x + p.x,piecePosition.y + p.y);
             if (BoardUtils.checkValid(destination)) { // valid Coordinate
                 final Tile candidateTile = board.getTile(destination);
                 if (!candidateTile.isTileOccupied())

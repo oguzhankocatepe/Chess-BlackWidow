@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Tile {
-    protected static Point tileCoordinate;
+    protected final Point tileCoordinate;
 
     private static final Map<Point,EmptyTile> EMPTY_TILES_CACHE = createAllPossibleEmptyTiles();
 
