@@ -99,11 +99,19 @@ public abstract class Move {
         public boolean isAttack(){ return  true;}
         @Override
         public Piece getAttackedPiece(){ return this.attackedPiece;}
+        @Override
+        public String toString(){
+            return movedPiece.getPieceType().toString()+"x"+BoardUtils.getAlgebraicNotation(getDestination());
+        }
     }
 
     public final static class PawnMove extends Move {
         public PawnMove(final Board board,final Piece piece,final Point point) {
             super(board, piece, point);
+        }
+        @Override
+        public String toString(){
+            return BoardUtils.getAlgebraicNotation(getDestination());
         }
     }
 
@@ -125,11 +133,19 @@ public abstract class Move {
             builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
             return builder.build();
         }
+        @Override
+        public String toString(){
+            return BoardUtils.getAlgebraicNotation(getDestination());
+        }
     }
 
     public static class PawnAttackMove extends AttackMove {
         public PawnAttackMove(final Board board, final Piece piece,final Point point,final Piece apiece) {
             super(board, piece, point, apiece);
+        }
+        @Override
+        public String toString(){
+            return BoardUtils.getAlgebraicNotation(getMovedPiece().getPiecePosition())+"x"+BoardUtils.getAlgebraicNotation(getDestination());
         }
     }
 

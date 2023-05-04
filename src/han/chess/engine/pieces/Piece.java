@@ -67,19 +67,29 @@ public abstract class Piece {
         return this.pieceType;
     }
 
+    public int getPieceValue() {
+            return this.pieceType.getPieceValue();
+    }
+
     public enum PieceType{
 
-        PAWN("P"),KNIGHT("N"),BISHOP("B"),ROOK("R"),QUEEN("Q"),KING("K");
+        PAWN("P",100),KNIGHT("N",290),BISHOP("B",300),ROOK("R",500),QUEEN("Q",900),KING("K",10000);
 
         private final String pieceName;
+        private final int pieceValue;
 
-        PieceType(final String s){
+        PieceType(final String s,final int v){
             pieceName = s;
+            pieceValue = v;
         }
 
         @Override
         public String toString(){
             return this.pieceName;
+        }
+
+        public int getPieceValue() {
+            return this.pieceValue;
         }
     }
 }
