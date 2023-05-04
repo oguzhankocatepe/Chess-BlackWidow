@@ -143,15 +143,29 @@ public abstract class Move {
         public PawnAttackMove(final Board board, final Piece piece,final Point point,final Piece apiece) {
             super(board, piece, point, apiece);
         }
+
         @Override
         public String toString(){
-            return BoardUtils.getAlgebraicNotation(getMovedPiece().getPiecePosition())+"x"+BoardUtils.getAlgebraicNotation(getDestination());
+            return BoardUtils.getAlgebraicNotation(getMovedPiece().getPiecePosition()).charAt(0)+"x"+BoardUtils.getAlgebraicNotation(getDestination());
         }
     }
 
     public static final class PawnEnPassantAttackMove extends PawnAttackMove {
         public PawnEnPassantAttackMove(final Board board, final Piece piece,final Point point,final Piece apiece) {
             super(board, piece, point, apiece);
+        }
+        @Override
+        public Board execute(){
+            final Builder builder = new Builder();
+            for (final Piece piece: this.board.getCurrentPlayer().getActivePieces())
+                if (!this.movedPiece.equals(piece))
+                    builder.setPiece(piece);
+            for (final Piece piece: this.board.getCurrentPlayer().getOpponent().getActivePieces())
+                if (!this.movedPiece.equals(attackedPiece))
+                    builder.setPiece(piece);
+            builder.setPiece(movedPiece.movePiece(this));
+            builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
+            return builder.build();
         }
     }
 
@@ -187,6 +201,13 @@ public abstract class Move {
             builder.setPiece(rook);
             builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
             return builder.build();
+        }
+        @Override
+        public int hashCode(){
+            int result = super.hashCode();
+            result = 31* result +castleRook.hashCode();
+            result = 31* result + castleRookEnd.hashCode();
+            return result;
         }
     }
 
