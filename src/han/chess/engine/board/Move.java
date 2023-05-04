@@ -56,7 +56,6 @@ public abstract class Move {
     public Board execute() {
         final Builder builder = new Builder();
         for (final Piece piece: this.board.getCurrentPlayer().getActivePieces())
-        // TODO : hashcode and equals for Piece classes
             if (!this.movedPiece.equals(piece))
                 builder.setPiece(piece);
         for (final Piece piece: this.board.getCurrentPlayer().getOpponent().getActivePieces())
@@ -69,6 +68,11 @@ public abstract class Move {
     public static final class MajorMove extends Move{
         public MajorMove(final Board board,final Piece piece,final Point point) {
             super(board, piece, point);
+        }
+
+        @Override
+        public String toString(){
+            return movedPiece.getPieceType().toString()+BoardUtils.getAlgebraicNotation(getDestination());
         }
     }
 

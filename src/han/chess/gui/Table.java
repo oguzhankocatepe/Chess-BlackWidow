@@ -144,6 +144,7 @@ public class Table {
             repaint();
         }
     }
+
     private class TilePanel extends JPanel{
         private final Point tileId;
         TilePanel(final BoardPanel boardPanel, final Point tileId){
