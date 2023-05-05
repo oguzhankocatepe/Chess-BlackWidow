@@ -95,6 +95,17 @@ public abstract class Player {
 
         if(!kingAttacks.isEmpty())
             return new MoveTransition(this.board,move,MoveStatus.LEAVES_PLAYER_IN_CHECK);
+        if (move instanceof Move.KingSideCastleMove){
+            if(!Player.calculateAttacksOnTile(new Point(move.getDestination().x-1,move.getDestination().y), transitionBoard.getCurrentPlayer().getLegalMoves()).isEmpty() ||
+               !Player.calculateAttacksOnTile(new Point(move.getDestination().x-2,move.getDestination().y), transitionBoard.getCurrentPlayer().getLegalMoves()).isEmpty())
+                return new MoveTransition(this.board,move,MoveStatus.LEAVES_PLAYER_IN_CHECK);
+        }
+        if (move instanceof Move.QueenSideCastleMove){
+            if(!Player.calculateAttacksOnTile(new Point(move.getDestination().x+1,move.getDestination().y), transitionBoard.getCurrentPlayer().getLegalMoves()).isEmpty() ||
+               !Player.calculateAttacksOnTile(new Point(move.getDestination().x+2,move.getDestination().y), transitionBoard.getCurrentPlayer().getLegalMoves()).isEmpty() ||
+               !Player.calculateAttacksOnTile(new Point(move.getDestination().x-1,move.getDestination().y), transitionBoard.getCurrentPlayer().getLegalMoves()).isEmpty())
+                return new MoveTransition(this.board,move,MoveStatus.LEAVES_PLAYER_IN_CHECK);
+        }
         return new MoveTransition(transitionBoard,move, MoveStatus.DONE);
     }
 }

@@ -232,10 +232,8 @@ public abstract class Move {
                     builder.setPiece(piece);
             for(final Piece piece : this.board.getCurrentPlayer().getOpponent().getActivePieces())
                 builder.setPiece(piece);
-            movedPiece.setFirstMove(false);
             builder.setPiece(this.movedPiece.movePiece(this));
             Rook rook = new Rook(castleRookEnd,castleRook.getPieceAlliance());
-            rook.setFirstMove(false);
             builder.setPiece(rook);
             builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
             return builder.build();
