@@ -12,18 +12,19 @@ import java.awt.Point;
 import java.util.*;
 
 public class Board {
-
     private final List<Tile> gameBoard;
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
     private final Player currentPlayer;
+    private final Pawn enPassantPawn;
 
     private Board (final Builder builder){
         this.gameBoard = createGameBoard(builder);
         this.whitePieces = calculateActivePieces(this.gameBoard,Alliance.WHITE);
         this.blackPieces = calculateActivePieces(this.gameBoard,Alliance.BLACK);
+        this.enPassantPawn = builder.enPassantPawn;
 
         final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
         final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
@@ -59,7 +60,10 @@ public class Board {
     public Collection<Piece> getBlackPieces() {
         return blackPieces;
     }
-    private Collection<Move> calculateLegalMoves(Collection<Piece> pieces) {
+    public Pawn getEnPassantPawn() {
+        return enPassantPawn;
+    }
+    public Collection<Move> calculateLegalMoves(Collection<Piece> pieces) {
 
         final List<Move> legalMoves = new ArrayList<Move>();
         for (final Piece piece: pieces)
@@ -163,7 +167,7 @@ public class Board {
             return new Board(this);
         }
 
-        public void setEnPassantPawn(Pawn movedPawn) {
+        public void setEnPassantPawn(final Pawn movedPawn) {
             this.enPassantPawn = movedPawn;
         }
     }

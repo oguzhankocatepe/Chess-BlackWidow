@@ -45,6 +45,14 @@ public class Pawn extends Piece{
                         // TODO : Promotions
                         legalMoves.add(new Move.PawnAttackMove(board,this,destination,piece));
                 }
+                else {
+                    if (board.getEnPassantPawn() != null && board.getEnPassantPawn().getPiecePosition().x == destination.x &&
+                            board.getEnPassantPawn().getPieceAlliance() != getPieceAlliance() &&
+                            board.getEnPassantPawn().getPiecePosition().y == piecePosition.y &&
+                            Math.abs(board.getEnPassantPawn().getPiecePosition().x - piecePosition.x) == 1) {
+                        legalMoves.add(new Move.PawnEnPassantAttackMove(board, this, destination, board.getEnPassantPawn()));
+                    }
+                }
             }
         }
         return ImmutableList.copyOf(legalMoves);

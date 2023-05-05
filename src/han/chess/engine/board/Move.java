@@ -155,13 +155,13 @@ public abstract class Move {
             super(board, piece, point, apiece);
         }
         @Override
-        public Board execute(){
+        public Board execute() {
             final Builder builder = new Builder();
-            for (final Piece piece: this.board.getCurrentPlayer().getActivePieces())
+            for (final Piece piece : this.board.getCurrentPlayer().getActivePieces())
                 if (!this.movedPiece.equals(piece))
                     builder.setPiece(piece);
-            for (final Piece piece: this.board.getCurrentPlayer().getOpponent().getActivePieces())
-                if (!this.movedPiece.equals(attackedPiece))
+            for (final Piece piece : this.board.getCurrentPlayer().getOpponent().getActivePieces())
+                if (!this.attackedPiece.equals(piece))
                     builder.setPiece(piece);
             builder.setPiece(movedPiece.movePiece(this));
             builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
@@ -196,7 +196,7 @@ public abstract class Move {
                 builder.setPiece(piece);
             movedPiece.setFirstMove(false);
             builder.setPiece(this.movedPiece.movePiece(this));
-            Rook rook = new Rook(castleRook.getPiecePosition(),castleRook.getPieceAlliance());
+            Rook rook = new Rook(castleRookEnd,castleRook.getPieceAlliance());
             rook.setFirstMove(false);
             builder.setPiece(rook);
             builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
