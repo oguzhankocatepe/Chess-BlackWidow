@@ -17,7 +17,7 @@ import static han.chess.engine.board.Move.*;
 public class King extends Piece{
 
     private final static Point[] candidates = { new Point (0,1), new Point(-1,0), new Point(1,0) , new Point(0,-1),
-            new Point (1,1), new Point(-1,1), new Point(-1,-1) , new Point(1,-1)};
+            new Point (1,1), new Point(-1,1), new Point(-1,-1) , new Point(1,-1), new Point(2,0), new Point(-2,0)};
 
     public King(final Point position,final  Alliance alliance) {
         super(PieceType.KING, position, alliance);
@@ -30,9 +30,42 @@ public class King extends Piece{
             final Point destination = new Point(piecePosition.x + p.x,piecePosition.y + p.y);
             if (BoardUtils.checkValid(destination)) { // valid Coordinate
                 final Tile candidateTile = board.getTile(destination);
-                if (!candidateTile.isTileOccupied())
-                    legalMoves.add(new MajorMove(board,this,destination));
-                else {
+                if (!candidateTile.isTileOccupied()){
+                    if (p == candidates[8]) {
+                        if (this.getPieceAlliance() == Alliance.WHITE) {
+                            Point betweenPoint = new Point(piecePosition.x + getPieceAlliance().getDirection(), piecePosition.y);
+                            Rook rook = (Rook)board.getTile(new Point(7,0)).getPiece();
+                            if (!board.getTile(betweenPoint).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
+                                legalMoves.add(new KingSideCastleMove(board, this, destination, rook, new Point(7, 0), new Point(5, 0)));
+                            }
+                        }else if (this.getPieceAlliance() == Alliance.BLACK) {
+                            Point betweenPoint = new Point(piecePosition.x + getPieceAlliance().getDirection(), piecePosition.y);
+                            Rook rook = (Rook)board.getTile(new Point(7,7)).getPiece();
+                            if (!board.getTile(betweenPoint).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
+                                legalMoves.add(new KingSideCastleMove(board, this, destination, rook, new Point(7, 7), new Point(5, 7)));
+                            }
+                        }
+                    } else if (p == candidates[9]) {
+                        if (this.getPieceAlliance() == Alliance.WHITE) {
+                            Point betweenPoint = new Point(piecePosition.x -  getPieceAlliance().getDirection(), piecePosition.y);
+                            Point betweenPoint2 = new Point(piecePosition.x -  2* getPieceAlliance().getDirection(), piecePosition.y);
+                            Rook rook = (Rook)board.getTile(new Point(0,0)).getPiece();
+                            if (!board.getTile(betweenPoint).isTileOccupied() && !board.getTile(betweenPoint2).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
+                                legalMoves.add(new QueenSideCastleMove(board, this, destination, rook, new Point(0, 0), new Point(3, 0)));
+                            }
+                        }else if (this.getPieceAlliance() == Alliance.BLACK) {
+                            Point betweenPoint = new Point(piecePosition.x -  getPieceAlliance().getDirection(), piecePosition.y);
+                            Point betweenPoint2 = new Point(piecePosition.x -  2* getPieceAlliance().getDirection(), piecePosition.y);
+                            Rook rook = (Rook)board.getTile(new Point(0,7)).getPiece();
+                            if (!board.getTile(betweenPoint).isTileOccupied() && !board.getTile(betweenPoint2).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
+                                legalMoves.add(new QueenSideCastleMove(board, this, destination, rook, new Point(0, 7), new Point(3, 7)));
+                            }
+                        }
+                    } else {
+                        legalMoves.add(new MajorMove(board, this, destination));
+                    }
+                }
+                else  if (candidateTile.isTileOccupied()){
                     final Piece piece = candidateTile.getPiece();
                     if (this.getPieceAlliance() != piece.getPieceAlliance())
                         legalMoves.add(new AttackMove(board,this,destination,piece));

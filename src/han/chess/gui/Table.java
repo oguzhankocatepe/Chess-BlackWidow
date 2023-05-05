@@ -202,6 +202,7 @@ public class Table {
                             if (move != Move.NULL_MOVE){
                                 final MoveTransition transition = chessBoard.getCurrentPlayer().makeMove(move);
                                 if (transition.getMoveStatus() == MoveStatus.DONE) {
+                                    move.getMovedPiece().setFirstMove(false);
                                     chessBoard = transition.getBoard();
                                     moveLog.addMove(move);
                                 }
