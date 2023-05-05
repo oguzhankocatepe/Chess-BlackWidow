@@ -149,6 +149,44 @@ public abstract class Move {
             return BoardUtils.getAlgebraicNotation(getMovedPiece().getPiecePosition()).charAt(0)+"x"+BoardUtils.getAlgebraicNotation(getDestination());
         }
     }
+    public static final class PawnPromotion extends Move{
+        final Move decoratedMove;
+        final Pawn promotedPawn;
+        public PawnPromotion(final Move decoratedMove){
+            super(decoratedMove.board,decoratedMove.movedPiece,decoratedMove.destination);
+            this.decoratedMove = decoratedMove;
+            this.promotedPawn = (Pawn) decoratedMove.getMovedPiece();
+        }
+        @Override
+        public int hashCode(){
+            return decoratedMove.hashCode() + (31 * promotedPawn.hashCode());
+        }
+        @Override
+        public Board execute(){
+            final Board pawnMovedBoard = this.decoratedMove.execute();
+            final Builder builder = new Builder();
+            for(final Piece piece : this.board.getCurrentPlayer().getActivePieces())
+                if (!this.movedPiece.equals(piece))
+                    builder.setPiece(piece);
+            for(final Piece piece : this.board.getCurrentPlayer().getOpponent().getActivePieces())
+                builder.setPiece(piece);
+            builder.setPiece(this.promotedPawn.getPromotionPiece().movePiece(this));
+            builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
+            return builder.build();
+        }
+        @Override
+        public boolean isAttack(){
+            return decoratedMove.isAttack();
+        }
+        @Override
+        public Piece getAttackedPiece(){
+            return decoratedMove.getAttackedPiece();
+        }
+        @Override
+        public String toString(){
+            return "";
+        }
+    }
 
     public static final class PawnEnPassantAttackMove extends PawnAttackMove {
         public PawnEnPassantAttackMove(final Board board, final Piece piece,final Point point,final Piece apiece) {

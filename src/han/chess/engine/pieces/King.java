@@ -34,35 +34,35 @@ public class King extends Piece{
                     if (p == candidates[8] ) {
                         if (this.getPieceAlliance() == Alliance.WHITE ) {
                             Point betweenPoint = new Point(piecePosition.x + 1, piecePosition.y);
-                            Rook rook = (Rook)board.getTile(new Point(7,0)).getPiece();
-                            if (rook != null && BoardUtils.checkValid(betweenPoint) )
+                            Piece rook = board.getTile(new Point(7,0)).getPiece();
+                            if (rook != null && rook instanceof Rook && BoardUtils.checkValid(betweenPoint) )
                                 if (!board.getTile(betweenPoint).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
-                                    legalMoves.add(new KingSideCastleMove(board, this, destination, rook, new Point(7, 0), new Point(5, 0)));
+                                    legalMoves.add(new KingSideCastleMove(board, this, destination, (Rook)rook, new Point(7, 0), new Point(5, 0)));
                             }
                         }else if (this.getPieceAlliance() == Alliance.BLACK ) {
                             Point betweenPoint = new Point(piecePosition.x + 1, piecePosition.y);
-                            Rook rook = (Rook)board.getTile(new Point(7,7)).getPiece();
-                            if (rook != null && BoardUtils.checkValid(betweenPoint) )
+                            Piece rook = board.getTile(new Point(7,7)).getPiece();
+                            if (rook != null && rook instanceof Rook && BoardUtils.checkValid(betweenPoint) )
                                 if (!board.getTile(betweenPoint).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
-                                    legalMoves.add(new KingSideCastleMove(board, this, destination, rook, new Point(7, 7), new Point(5, 7)));
+                                    legalMoves.add(new KingSideCastleMove(board, this, destination, (Rook)rook, new Point(7, 7), new Point(5, 7)));
                             }
                         }
                     } else if (p == candidates[9]) {
                         if (this.getPieceAlliance() == Alliance.WHITE ) {
                             Point betweenPoint = new Point(piecePosition.x -  1, piecePosition.y);
                             Point betweenPoint2 = new Point(piecePosition.x -  3, piecePosition.y);
-                            Rook rook = (Rook)board.getTile(new Point(0,0)).getPiece();
-                            if (rook != null && BoardUtils.checkValid(betweenPoint) && BoardUtils.checkValid(betweenPoint2))
+                            Piece rook = board.getTile(new Point(0,0)).getPiece();
+                            if (rook != null && rook instanceof Rook && BoardUtils.checkValid(betweenPoint) && BoardUtils.checkValid(betweenPoint2))
                                 if (!board.getTile(betweenPoint).isTileOccupied() && !board.getTile(betweenPoint2).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
-                                    legalMoves.add(new QueenSideCastleMove(board, this, destination, rook, new Point(0, 0), new Point(3, 0)));
+                                    legalMoves.add(new QueenSideCastleMove(board, this, destination, (Rook)rook, new Point(0, 0), new Point(3, 0)));
                             }
                         }else if (this.getPieceAlliance() == Alliance.BLACK ) {
                             Point betweenPoint = new Point(piecePosition.x -  1, piecePosition.y);
                             Point betweenPoint2 = new Point(piecePosition.x -  3, piecePosition.y);
-                            Rook rook = (Rook)board.getTile(new Point(0,7)).getPiece();
-                            if (rook != null && BoardUtils.checkValid(betweenPoint) && BoardUtils.checkValid(betweenPoint2))
+                            Piece rook = board.getTile(new Point(0,7)).getPiece();
+                            if (rook != null && rook instanceof Rook && BoardUtils.checkValid(betweenPoint) && BoardUtils.checkValid(betweenPoint2))
                                 if (!board.getTile(betweenPoint).isTileOccupied() && !board.getTile(betweenPoint2).isTileOccupied() && rook.isFirstMove && this.isFirstMove()) {
-                                    legalMoves.add(new QueenSideCastleMove(board, this, destination, rook, new Point(0, 7), new Point(3, 7)));
+                                    legalMoves.add(new QueenSideCastleMove(board, this, destination, (Rook)rook, new Point(0, 7), new Point(3, 7)));
                             }
                         }
                     } else {
